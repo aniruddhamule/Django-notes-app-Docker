@@ -179,8 +179,6 @@ docker compose down
 
 ---
 
-## 📸 Screenshots
-
 ### 📁 Project Structure
 
 <img width="1124" height="436" alt="Screenshot 2026-02-15 001738" src="https://github.com/user-attachments/assets/d4a0ba0c-6cf9-4c9a-bcac-af1d80240edd" />
@@ -251,7 +249,7 @@ Check `docker-compose.yml` environment variables:
 
 ## Credits & Acknowledgments
 
-This project is based on the original work by **Shubham Londhe**  [@LondheShubham153]
+This project is based on the original work by **Shubham Londhe** 
 
 Original Repository: (https://github.com/LondheShubham153/django-notes-app.git)
 
