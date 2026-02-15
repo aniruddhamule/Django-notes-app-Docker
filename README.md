@@ -5,7 +5,6 @@
 This project is a production-style Django Notes Application deployed on AWS EC2 using Docker and Docker Compose.
 
 The application follows a multi-container architecture:
-
 - Nginx 
 - Django (Application Server)
 - MySQL (Database)
@@ -14,14 +13,15 @@ The application follows a multi-container architecture:
 
 ---
 
-# 🏗 Architecture Diagram
+## 🏗 Architecture Diagram
+
 <img width="2816" height="1536" alt="Gemini_Generated_Image_vtrywcvtrywcvtry" src="https://github.com/user-attachments/assets/20c8e093-2ab3-4564-9587-6d1eada39142" />
 
 ---
 
-# ⚙️ How This Project Works (Step-by-Step)
+## ⚙️ How This Project Works (Step-by-Step)
 
-## 1️⃣ User Request Flow
+### 1️⃣ User Request Flow
 
 1. User hits EC2 Public IP in browser.
 2. Request reaches EC2 instance.
@@ -34,141 +34,280 @@ The application follows a multi-container architecture:
 
 ---
 
-# ☁ AWS EC2 Setup
+## ☁ AWS EC2 Setup
+
+### 1️⃣ Connect to EC2
 
 ```bash
-1️⃣ Connect to EC2
 ssh -i your-key.pem ubuntu@<EC2_PUBLIC_IP>
+```
 
-2️⃣ Install Docker
+### 2️⃣ Install Docker
+
+```bash
 sudo apt update -y
 sudo apt install docker.io -y
 docker --version
 sudo systemctl start docker
 sudo systemctl enable docker
+```
 
-3️⃣ Install Docker Compose
+### 3️⃣ Install Docker Compose
+
+```bash
 sudo apt install docker-compose -y
-Verify:
-docker compose version
+```
 
-📦 Clone Repository
+Verify:
+```bash
+docker compose version
+```
+
+---
+
+## 📦 Clone Repository
+
+```bash
 git clone https://github.com/aniruddhamule/django-notes-app.git
 cd django-notes-app
+```
 
-🐳 Build & Run Application
+---
+
+## 🐳 Build & Run Application
+
+```bash
 docker compose up --build -d
+```
 
-What This Command Does:
+**What This Command Does:**
+- Builds Django image
+- Builds Nginx image
+- Pulls MySQL image
+- Creates Docker network
+- Creates volumes
+- Starts all containers
 
-Builds Django image
-Builds Nginx image
-Pulls MySQL image
-Creates Docker network
-Creates volumes
-Starts all containers
+---
 
-🔍 Verify Containers
+## 🔍 Verify Containers
+
+```bash
 docker ps
+```
 
-Expected containers:
-nginx_cont
-django_cont
-db_cont
+**Expected containers:**
+- nginx_cont
+- django_cont
+- db_cont
 
-📊 Check Container Logs
-Nginx Logs
+---
+
+## 📊 Check Container Logs
+
+### Nginx Logs
+```bash
 docker logs nginx_cont
+```
 
-Django Logs
+### Django Logs
+```bash
 docker logs django_cont
+```
 
-MySQL Logs
+### MySQL Logs
+```bash
 docker logs db_cont
+```
 
-🌐 Access Application
+---
+
+## 🌐 Access Application
 
 Open in browser:
-
+```
 http://<EC2_PUBLIC_IP>
-🐳 Docker Networking Explanation
+```
+
+---
+
+## 🐳 Docker Networking Explanation
 
 Docker Compose automatically creates a bridge network.
 
-Containers communicate using service names defined in docker-compose.yml.
+Containers communicate using service names defined in `docker-compose.yml`.
 
-Example:
+**Example:**
+- Django connects to MySQL using:
+  ```
+  DB_HOST=db_cont
+  ```
+- Nginx forwards traffic to:
+  ```
+  django_cont:8000
+  ```
+- MySQL is NOT publicly exposed.
 
-Django connects to MySQL using:
+---
 
-DB_HOST=db_cont
-
-
-Nginx forwards traffic to:
-
-django_cont:8000
-
-
-MySQL is NOT publicly exposed.
-
-🗄 Database Persistence
+## 🗄 Database Persistence
 
 MySQL uses a Docker volume:
-
+```
 mysql-data/
-
+```
 
 This ensures database data is not lost when containers restart.
 
-🔁 Restart / Rebuild Application
+---
+
+## 🔁 Restart / Rebuild Application
 
 If code changes:
-
+```bash
 docker compose down
 docker compose up --build -d
-
-🛑 Stop Application
-docker compose down
-
-📁 Project Structure
-<img width="1124" height="436" alt="Screenshot 2026-02-15 001738" src="https://github.com/user-attachments/assets/d4a0ba0c-6cf9-4c9a-bcac-af1d80240edd" />
 ```
 
-# 📸 Screenshots
+---
 
-## 📝 Notes Application UI
+## 🛑 Stop Application
+
+```bash
+docker compose down
+```
+
+---
+
+## 📸 Screenshots
+
+### 📁 Project Structure
+
+<img width="1124" height="436" alt="Screenshot 2026-02-15 001738" src="https://github.com/user-attachments/assets/d4a0ba0c-6cf9-4c9a-bcac-af1d80240edd" />
+
+---
+
+### 📝 Notes Application UI
+
 <img width="1360" height="768" alt="Screenshot 2026-02-15 001106" src="https://github.com/user-attachments/assets/0ce11cc7-874b-4c66-be0d-ce7fbb64d67c" />
 
 ---
-## ☁ AWS EC2 Instance Running
+
+### ☁ AWS EC2 Instance Running
 
 <img width="1360" height="655" alt="Screenshot 2026-02-15 001245" src="https://github.com/user-attachments/assets/71877369-4649-43c7-b9fb-6c85ae3ea176" />
 
 ---
 
-## 🐳 Docker Build & Containers
+### 🐳 Docker Build & Containers
 
 <img width="1110" height="485" alt="Screenshot 2026-02-15 001426" src="https://github.com/user-attachments/assets/1b599d99-51f6-4355-8c84-8d545beb2b3b" />
 
 ---
 
-## 🔍 Nginx Logs (Live Traffic)
+### 🔍 Nginx Logs (Live Traffic)
 
 <img width="1132" height="364" alt="Screenshot 2026-02-15 001535" src="https://github.com/user-attachments/assets/ee2a62f7-5070-44b4-9b18-aed9eeecbb20" />
 
 ---
 
+## 🎯 Key Features
 
+- ✅ Multi-container Docker architecture
+- ✅ Nginx reverse proxy
+- ✅ Django application server
+- ✅ MySQL database with persistent storage
+- ✅ Deployed on AWS EC2
+- ✅ Production-ready setup
 
+---
 
+## 📝 Technologies Used
 
+- **Backend:** Django
+- **Web Server:** Nginx
+- **Database:** MySQL
+- **Containerization:** Docker, Docker Compose
+- **Cloud:** AWS EC2
+- **Version Control:** Git/GitHub
 
+---
 
+## 🔧 Project Structure
 
+```
+django-notes-app/
+├── docker-compose.yml
+├── Dockerfile
+├── nginx/
+│   └── nginx.conf
+├── app/
+│   ├── manage.py
+│   └── ...
+├── mysql-data/
+└── README.md
+```
 
+---
 
+## 🚨 Troubleshooting
 
+### Container not starting?
+```bash
+docker logs <container_name>
+```
 
+### Port already in use?
+```bash
+sudo lsof -i :80
+sudo kill -9 <PID>
+```
 
+### Database connection issues?
+Check `docker-compose.yml` environment variables:
+- `DB_HOST`
+- `DB_PORT`
+- `DB_NAME`
+- `DB_USER`
+- `DB_PASSWORD`
 
+---
 
+## 📚 Additional Resources
+
+- [Docker Documentation](https://docs.docker.com/)
+- [Django Documentation](https://docs.djangoproject.com/)
+- [AWS EC2 Guide](https://docs.aws.amazon.com/ec2/)
+- [Nginx Documentation](https://nginx.org/en/docs/)
+
+---
+
+## 👨‍💻 Author
+
+**Aniruddha Mule**
+
+GitHub: [@aniruddhamule](https://github.com/aniruddhamule)
+
+---
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+---
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome!
+
+Feel free to check the [issues page](https://github.com/aniruddhamule/django-notes-app/issues).
+
+---
+
+## ⭐ Show your support
+
+Give a ⭐️ if this project helped you!
+
+---
+
+**Made with ❤️ by Aniruddha Mule**
