@@ -1,33 +1,45 @@
-#🚀 Django Notes App – Dockerized Deployment on AWS EC2
+# 🚀 Django Notes App – Dockerized on AWS EC2
 
 ## 📌 Project Overview
 
-This project is a fully containerized **Django Notes Application** deployed on an **AWS EC2 instance** using Docker and Docker Compose.
+This project is a production-style Django Notes Application deployed on AWS EC2 using Docker and Docker Compose.
 
-It demonstrates:
+The application follows a multi-container architecture:
 
-- 🐳 Docker multi-container setup
-- 🌐 Nginx reverse proxy
-- 🗄 MySQL database container
-- ☁ AWS EC2 cloud deployment
-- 🔁 Docker networking between services
-- 📦 Production-style architecture
+- Nginx 
+- Django (Application Server)
+- MySQL (Database)
+- Docker Network (Internal Communication)
+- AWS EC2 (Infrastructure Host)
 
 ---
 
 # 🏗 Architecture Diagram
 <img width="2816" height="1536" alt="Gemini_Generated_Image_vtrywcvtrywcvtry" src="https://github.com/user-attachments/assets/20c8e093-2ab3-4564-9587-6d1eada39142" />
----
-# 🧱 Tech Stack
 
-- Python 3.9
-- Django
-- MySQL
-- Nginx
-- Docker
-- Docker Compose
-- AWS EC2 (t2.medium)
 ---
+
+# ⚙️ How This Project Works (Step-by-Step)
+
+## 1️⃣ User Request Flow
+
+1. User hits EC2 Public IP in browser.
+2. Request reaches EC2 instance.
+3. Port 80 is exposed via Docker.
+4. Nginx container receives request.
+5. Nginx forwards request to Django container.
+6. Django processes logic.
+7. Django communicates with MySQL container.
+8. Response flows back to user.
+
+---
+
+# ☁ AWS EC2 Setup (Commands Used)
+
+## Connect to EC2
+
+```bash
+ssh -i your-key.pem ubuntu@<EC2_PUBLIC_IP>
 
 # 📸 Screenshots
 
